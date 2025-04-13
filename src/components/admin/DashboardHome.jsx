@@ -32,7 +32,7 @@ const DashboardHome = () => {
     { 
       title: "Utilisateurs", 
       value: stats?.users,
-      icon: <FaUsers className="text-3xl text-blue-500"/>,
+      icon: <FaUsers className="text-3xl flex items-center text-blue-500"/>,
       color: 'blue'
     },
     { 
@@ -48,9 +48,9 @@ const DashboardHome = () => {
       color: 'green'
     },
     { 
-      title: "Administrateurs", 
+      title: "Admin", 
       value: stats?.administrateurs,
-      icon: <FaUserTie className="text-3xl text-yellow-500"/>,
+      icon: <FaUserTie className="text-3xl flex items-center text-yellow-500"/>,
       color: 'yellow'
     },
     { 
@@ -86,7 +86,7 @@ const DashboardHome = () => {
   return (
     <div className="space-y-8">
       {/* Grille de statistiques */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-5">
         {statsConfig.map((stat, index) => (
           <motion.div
             key={stat.title}
