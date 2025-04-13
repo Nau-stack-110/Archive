@@ -41,18 +41,12 @@
   border: solid 2px rgb(17, 106, 223);
 }
 
-.form-input {
-  @apply w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white;
-}
-
-.form-label {
-  @apply block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300;
-}
-
-.form-page {
-  @apply min-h-screen py-8 px-4;
-}
-
-.form-container {
-  @apply max-w-4xl mx-auto bg-white dark:bg-gray-800 rounded-xl shadow-xl p-6;
+input{
+  height: 50px;
+  width: 265px;
+  font-size: 12px;
+  border: solid 1px white;
+  border-radius: 10px;
+  cursor: pointer;
+  border: none;
 }
