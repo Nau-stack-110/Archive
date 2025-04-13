@@ -45,10 +45,11 @@ input{
   height: 50px;
   width: 265px;
   font-size: 12px;
-  background: transparent;
+  color: white;
   outline: none;
   border: none;
   border-radius: 10px;
+
 }
 
 label {
@@ -64,3 +65,4 @@ label {
 .mdp:hover{
   border: none;
 }
+

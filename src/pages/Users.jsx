@@ -219,7 +219,7 @@ const Users = () => {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700"
+        className="overflow-x-auto rounded border border-gray-200 dark:border-gray-700"
       >
         <table className="w-full bg-white dark:bg-gray-800">
           <thead className="bg-gray-50 dark:bg-gray-700">

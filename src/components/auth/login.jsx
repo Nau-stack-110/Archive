@@ -83,7 +83,7 @@ const Login = () => {
                 name="email"
                 type="email"
                 required
-                className=" rounded-lg relative block  w-full border px-3 border-gray-300 placeholder-gray-500 text-gray-900 font-bold focus:outline-none"
+                className=" rounded-lg relative block  w-full border px-3 border-gray-300 placeholder-gray-500 text-white font-bold focus:outline-none"
                 placeholder="Adresse email"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
