@@ -115,55 +115,55 @@ const DocumentForm = ({ serviceType }) => {
           className="space-y-4"
           onSubmit={handleSubmit}
         >
-          <div className="grid grid-cols-1 text-white w-full md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 text-white w-full dark:text-white md:grid-cols-2 gap-4">
             <input
               type="text"
               placeholder="Nom"
-              className="p-2 border rounded bg-white w-full text-black   dark:text-white"
+              className="p-2 border rounded bg-white w-full placeholder-black   dark:text-white"
               required
               onChange={(e) => setFormData({...formData, nom: e.target.value})}
             />
             <input
               type="text"
               placeholder="Prénom"
-              className="p-2 border rounded bg-white w-full text-black   dark:text-white"
+              className="p-2 border rounded bg-white w-full text-black placeholder-black  dark:text-white"
               required
               onChange={(e) => setFormData({...formData, prenom: e.target.value})}
             />
             <input
               type="text"
               placeholder="Lieu de naissance"
-              className="p-2 border rounded bg-white w-full text-black   dark:text-white"
+              className="p-2 border rounded bg-white w-full text-black  placeholder-black dark:text-white"
               required
               onChange={(e) => setFormData({...formData, lieu_naissance: e.target.value})}
             />
             <input
               type="date"
-              className="p-2 border rounded bg-white w-full text-black   dark:text-white"
+              className="p-2 border rounded placeholder-black text-black w-full  dark:text-white"
               required
               onChange={(e) => setFormData({...formData, date_naissance: e.target.value})}
             />
             <input
               type="file"
-              className="p-2 border rounded bg-white w-full text-black  "
+              className="p-2 border rounded bg-white w-full text-black placeholder-black  dark:text-white"
               onChange={(e) => setFormData({...formData, image: e.target.files[0]})}
             />
             <input
               type="text"
               placeholder="Adresse"
-              className="p-2 border rounded bg-white w-full text-black   dark:text-white"
+              className="p-2 border rounded bg-white w-full text-black placeholder-black  dark:text-white"
               required
               onChange={(e) => setFormData({...formData, adresse: e.target.value})}
             />
             <input
               type="text"
               placeholder="CIN"
-              className="p-2 border rounded bg-white w-full text-black   dark:text-white"
+              className="p-2 border rounded bg-white w-full text-black placeholder-black  dark:text-white"
               required
               onChange={(e) => setFormData({...formData, cin: e.target.value})}
             />
             <select
-              className="p-2 border rounded bg-white w-full text-black   dark:text-white"
+              className="p-2 border rounded bg-white w-full text-black placeholder-black  dark:text-white"
               required
               onChange={(e) => setFormData({...formData, sexe: e.target.value})}
             >
