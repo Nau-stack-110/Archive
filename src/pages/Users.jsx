@@ -105,7 +105,7 @@ const Users = () => {
     };
 
     return (
-      <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
+      <div className="fixed inset-0 text-white bg-black/50 flex items-center justify-center">
         <div className="bg-white p-6 rounded-lg w-96">
           <h2 className="text-xl font-bold mb-4">
             {user ? 'Modifier' : 'Nouvel'} Utilisateur
@@ -114,14 +114,14 @@ const Users = () => {
             <input
               type="text"
               placeholder="Nom"
-              className="w-full p-2 border rounded"
+              className="w-full p-2 text-white border rounded"
               value={formData.nom}
               onChange={(e) => setFormData({...formData, nom: e.target.value})}
             />
             <input
               type="text"
               placeholder="Prénom"
-              className="w-full p-2 border rounded"
+              className="w-full text-white p-2 border rounded"
               value={formData.prenom}
               onChange={(e) => setFormData({...formData, prenom: e.target.value})}
             />
@@ -206,11 +206,11 @@ const Users = () => {
             <input
               type="text"
               placeholder="Rechercher..."
-              className="w-full p-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg pr-10"
+              className="w-full p-3 bg-white text-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg pr-10"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
-            <FaSearch className="absolute right-3 top-3 text-gray-400 dark:text-gray-500" />
+            <FaSearch className="absolute right-3 top-3 text-gray-400 text-white" />
           </div>
 
         </div>
@@ -224,11 +224,11 @@ const Users = () => {
         <table className="w-full bg-white dark:bg-gray-800">
           <thead className="bg-gray-50 dark:bg-gray-700">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Nom</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Prénom</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">CIN</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">QR Code</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Actions</th>
+              <th className="px-6 py-3 text-center text-xs font-bold p-5 text-gray-500 dark:text-gray-300 uppercase tracking-wider">Nom</th>
+              <th className="px-6 py-3 text-center text-xs font-bold p-5 text-gray-500 dark:text-gray-300 uppercase tracking-wider">Prénom</th>
+              <th className="px-6 py-3 text-center text-xs font-bold p-5 text-gray-500 dark:text-gray-300 uppercase tracking-wider">CIN</th>
+              <th className="px-6 py-3 text-center text-xs font-bold p-5 text-gray-500 dark:text-gray-300 uppercase tracking-wider">QR Code</th>
+              <th className="px-6 py-3 text-center text-xs font-bold p-5 text-gray-500 dark:text-gray-300 uppercase tracking-wider">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
@@ -237,7 +237,7 @@ const Users = () => {
                 key={user.id}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                className="hover:bg-gray-50 text-white dark:hover:bg-blue-600 transition-colors"
               >
                 <td className="px-6 py-4 whitespace-nowrap">
                   {user.nom}
@@ -286,20 +286,7 @@ const Users = () => {
         </motion.div>
       )}
 
-      <div className="mt-6 flex justify-end gap-4">
-        <button
-          onClick={() => setShowModal(true)}
-          className="px-4 py-2 bg-green-600 text-white rounded"
-        >
-          + Nouvel Utilisateur
-        </button>
-        <button
-          onClick={handleLogout}
-          className="px-4 py-2 bg-red-600 text-white rounded"
-        >
-          Déconnexion
-        </button>
-      </div>
+     
 
       {showModal && (
         <UserFormModal

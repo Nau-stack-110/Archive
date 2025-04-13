@@ -45,8 +45,22 @@ input{
   height: 50px;
   width: 265px;
   font-size: 12px;
-  border: solid 1px white;
+  background: transparent;
+  outline: none;
+  border: none;
   border-radius: 10px;
-  cursor: pointer;
+}
+
+label {
+  border: none;
+  background: transparent;
+  outline: none;
+}
+
+.mdp{
+  color: white;
+}
+
+.mdp:hover{
   border: none;
 }

@@ -44,8 +44,8 @@ export default function Profile() {
   return (
     <div className="max-w-4xl mx-auto p-6 animate__animated animate__fadeIn">
       {/* Section Informations utilisateur */}
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 mb-8 transition-all duration-300 hover:shadow-xl">
-        <h2 className="text-2xl font-bold mb-6 flex items-center gap-3 text-blue-600 dark:text-blue-400">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl text-center shadow-lg p-6 mb-8 transition-all duration-300 ">
+        <h2 className="text-2xl font-bold  flex text-center gap-3 text-blue-600 dark:text-blue-400">
           <FaUserCircle className="animate__animated animate__fadeInLeft" />
           {userData ? `Profil Administrateur - ${userData.username}` : "Profil Administrateur"}
         </h2>
@@ -80,14 +80,14 @@ export default function Profile() {
       {/* Section Changement de mot de passe */}
       <form
         onSubmit={handleSubmit(onSubmitPassword)}
-        className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl"
+        className="mdp bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6  "
       >
-        <h2 className="text-2xl font-bold mb-6 flex items-center gap-3 text-green-600 dark:text-green-400">
+        <h2 className="mdp text-2xl font-bold mb-6 flex items-center gap-3 text-white ">
           <FaKey className="animate__animated animate__fadeInLeft" />
           Changer le mot de passe
         </h2>
 
-        <div className="space-y-4">
+        <div className=" space-y-4">
           <InputField
             icon="currentPassword"
             label="Mot de passe actuel"
@@ -95,6 +95,7 @@ export default function Profile() {
             register={register}
             errors={errors}
             required
+            className="m-5 mdp"
           />
 
           <InputField
@@ -113,6 +114,7 @@ export default function Profile() {
             type="password"
             register={register}
             errors={errors}
+            className ="m-5"
             required
             validate={value => value === watch('newPassword') || "Les mots de passe ne correspondent pas"}
           />
@@ -120,7 +122,7 @@ export default function Profile() {
           <button
             type="submit"
             disabled={isUpdating}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-center gap-2"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 p-5 rounded-lg transition-all duration-300 flex items-center justify-center gap-2"
           >
             {isUpdating ? (
               <FaSpinner className="animate-spin" />
