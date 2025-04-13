@@ -83,7 +83,7 @@ const Login = () => {
                 name="email"
                 type="email"
                 required
-                className="appearance-none rounded-lg relative block w-full px-3 border border-gray-300 placeholder-gray-500 text-gray-900 font-bold focus:outline-none"
+                className=" rounded-lg relative block  w-full border px-3 border-gray-300 placeholder-gray-500 text-gray-900 font-bold focus:outline-none"
                 placeholder="Adresse email"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -127,7 +127,7 @@ const Login = () => {
           </div>
 
           <div className="justify-center">
-            <input type="submit" value="Se connecter" className="submit text-white bg-[#3498DB] border mt-8" />
+            <input type="submit" value="Se connecter" className="submit w-full text-white bg-[#3498DB] border mt-8" />
           </div>
         </form>
       </motion.div>
