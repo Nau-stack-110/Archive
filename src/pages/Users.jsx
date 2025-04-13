@@ -50,25 +50,36 @@ const Users = () => {
     }
   };
 
-  const handleDelete = async (id) => {
+  const handleDeleteUser = async (userId) => {
     try {
       const result = await Swal.fire({
         title: 'Êtes-vous sûr?',
         text: "Cette action est irréversible!",
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
         confirmButtonText: 'Oui, supprimer!'
       });
 
       if (result.isConfirmed) {
-        await axios.delete(`http://localhost:8000/api/clients/${id}/`);
-        setUsers(users.filter(user => user.id !== id));
-        Swal.fire('Supprimé!', 'Utilisateur supprimé avec succès', 'success');
+        await axios.delete(`http://localhost:8000/api/clients/${userId}/`);
+        setUsers(users.filter(user => user.id !== userId));
+        
+        await Swal.fire({
+          icon: 'success',
+          title: 'Supprimé!',
+          text: 'Utilisateur supprimé avec succès',
+          timer: 2000
+        });
       }
     } catch (error) {
-      Swal.fire('Erreur!', 'Échec de la suppression', 'error');
+      console.error('Erreur lors de la suppression:', error);
+      await Swal.fire({
+        icon: 'error',
+        title: 'Erreur',
+        text: 'Impossible de supprimer l\'utilisateur'
+      });
     }
   };
 
@@ -206,11 +217,11 @@ const Users = () => {
             <input
               type="text"
               placeholder="Rechercher..."
-              className="w-full p-3 bg-white text-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg pr-10"
+              className="w-full p-3 bg-white text-white dark:bg-gray-800 dark:text-white border border-gray-200 rounded-lg pr-10"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
-            <FaSearch className="absolute right-3 top-3 text-gray-400 text-white" />
+            <FaSearch className="absolute right-3 top-3  text-white" />
           </div>
 
         </div>
@@ -224,11 +235,11 @@ const Users = () => {
         <table className="w-full bg-white dark:bg-gray-800">
           <thead className="bg-gray-50 dark:bg-gray-700">
             <tr>
-              <th className="px-6 py-3 text-center text-xs font-bold p-5 text-gray-500 dark:text-gray-300 uppercase tracking-wider">Nom</th>
-              <th className="px-6 py-3 text-center text-xs font-bold p-5 text-gray-500 dark:text-gray-300 uppercase tracking-wider">Prénom</th>
-              <th className="px-6 py-3 text-center text-xs font-bold p-5 text-gray-500 dark:text-gray-300 uppercase tracking-wider">CIN</th>
-              <th className="px-6 py-3 text-center text-xs font-bold p-5 text-gray-500 dark:text-gray-300 uppercase tracking-wider">QR Code</th>
-              <th className="px-6 py-3 text-center text-xs font-bold p-5 text-gray-500 dark:text-gray-300 uppercase tracking-wider">Actions</th>
+              <th className="px-6 py-3 text-left text-xs font-bold p-5 text-gray-500 dark:text-gray-300 uppercase tracking-wider">Nom</th>
+              <th className="px-6 py-3 text-left text-xs font-bold p-5 text-gray-500 dark:text-gray-300 uppercase tracking-wider">Prénom</th>
+              <th className="px-6 py-3 text-left text-xs font-bold p-5 text-gray-500 dark:text-gray-300 uppercase tracking-wider">CIN</th>
+              <th className="px-6 py-3 text-left text-xs font-bold p-5 text-gray-500 dark:text-gray-300 uppercase tracking-wider">QR Code</th>
+              <th className="px-6 py-3 text-left text-xs font-bold p-5 text-gray-500 dark:text-gray-300 uppercase tracking-wider">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
@@ -249,7 +260,7 @@ const Users = () => {
                   {user.cin}
                 </td>
             
-                <td className="px-6 py-4 whitespace-nowrap">
+                <td className="px-6  py-4 whitespace-nowrap">
                   {user.qrcode && (
                     <button 
                       onClick={() => {
@@ -263,10 +274,11 @@ const Users = () => {
                   )}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">
-                  <button className="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 mr-4">
-                    <FaEdit className="inline-block" />
-                  </button>
-                  <button className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">
+                  
+                  <button 
+                    onClick={() => handleDeleteUser(user.id)}
+                    className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300"
+                  >
                     <FaTrash className="inline-block" />
                   </button>
                 </td>

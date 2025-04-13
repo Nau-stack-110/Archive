@@ -18,7 +18,7 @@ const Home = () => {
           <span className="text-blue-500">Taratasy</span></div>
         </div>
         <div className="flex gap-4">
-          <button className="text-white font-bold btn hover:bg-blue-500"><a href="/login">Se connecter</a></button>
+        <a href="/login"> <button className="text-white font-bold btn hover:bg-blue-500">Se connecter</button></a>  
         </div>
       </nav>
 
@@ -29,14 +29,7 @@ const Home = () => {
           <p className="text-gray-400 text-xl max-w-2xl mx-auto mb-12">
             Créez, téléchargez et gérez facilement vos actes de naissance, mariage, décès, et plus encore, en toute sécurité.
           </p>
-          <div className="flex gap-4 justify-center">
-            <button className="btn1 bg-blue-600 text-white rounded-lg  transition-colors"><a
-              href={isAuthenticated ? "/documents" : "/login"}
-              
-            >
-              Demander un document
-            </a></button>
-          </div>
+         
         </div>
 
         <div className="grid grid-cols-1  md:grid-cols-3 gap-8 mt-24 max-w-6xl mx-auto pb-20">

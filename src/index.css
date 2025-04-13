@@ -45,11 +45,19 @@ input{
   height: 50px;
   width: 265px;
   font-size: 12px;
-  color: white;
   outline: none;
   border: none;
   border-radius: 10px;
+  color: rgb(27, 6, 75);
 
+}
+
+input:focus{
+  color: rgb(27, 6, 75);
+}
+
+input::placeholder {
+  color: rgb(27, 6, 75);
 }
 
 label {
@@ -59,6 +67,7 @@ label {
 }
 
 .mdp{
+  color: rgb(31, 29, 29);
 }
 
 .mdp:hover{

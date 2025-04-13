@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { motion } from 'framer-motion';
 import { 
@@ -13,19 +14,29 @@ const DashboardHome = () => {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
+  const fetchStats = async () => {
+    try {
+      const response = await axios.get('http://localhost:8000/api/stats');
+      setStats(response.data);
+      setError(null);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const response = await axios.get('http://localhost:8000/api/stats');
-        setStats(response.data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+    // Charger les stats immédiatement
     fetchStats();
+
+    // Mettre en place l'intervalle de rafraîchissement
+    const interval = setInterval(fetchStats, 1000);
+
+    // Nettoyage
+    return () => clearInterval(interval);
   }, []);
 
   const statsConfig = [
@@ -57,7 +68,8 @@ const DashboardHome = () => {
       title: "Demandes d'actes", 
       value: stats?.demandes_acte,
       icon: <FaFileContract className="text-3xl text-red-500"/>,
-      color: 'red'
+      color: 'red',
+      onClick: () => navigate('/admin/notifications')
     },
     { 
       title: "Clients", 
@@ -93,7 +105,10 @@ const DashboardHome = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
-            className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow duration-300"
+            className={`bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow duration-300 ${
+              stat.onClick ? 'cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700' : ''
+            }`}
+            onClick={stat.onClick}
           >
             <div className="flex items-center justify-between">
               <div>

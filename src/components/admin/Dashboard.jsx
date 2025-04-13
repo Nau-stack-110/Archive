@@ -6,11 +6,13 @@ import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaSignOutAlt } from 'react-icons/fa';
 import Swal from 'sweetalert2';
+import axios from 'axios';
 
 const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [notificationCount, setNotificationCount] = useState(0);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -66,6 +68,34 @@ const Dashboard = () => {
       setIsSidebarOpen(true); // Assure que la sidebar est ouverte par défaut si le menu mobile est fermé
     }
   }, [isMobileMenuOpen]);
+
+  useEffect(() => {
+    const fetchNotificationCount = async () => {
+      try {
+        const response = await axios.get('http://localhost:8000/api/demandes-acte/');
+        // Filtrer pour ne compter que les notifications non vues
+        const unviewedNotifications = response.data.filter(demande => !demande.viewed);
+        setNotificationCount(Math.min(unviewedNotifications.length, 0));
+      } catch (error) {
+        console.error('Erreur lors du chargement des notifications:', error);
+      }
+    };
+
+    fetchNotificationCount();
+    // Rafraîchir toutes les 5 minutes
+    const interval = setInterval(fetchNotificationCount,1000);
+
+    // Écouter l'événement de notifications vues
+    const handleNotificationsViewed = () => {
+      setNotificationCount(0);
+    };
+    window.addEventListener('notificationsViewed', handleNotificationsViewed);
+
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('notificationsViewed', handleNotificationsViewed);
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
@@ -132,7 +162,7 @@ const Dashboard = () => {
                         {localStorage.getItem('userEmail')}
                       </p>
                     </div>
-                    <ul className="py-1">
+                    <ul className="py-1"> 
                       <li>
                         <Link 
                           to="/admin"
@@ -191,9 +221,14 @@ const Dashboard = () => {
               <li>
                 <Link 
                   to="/admin/notifications" 
-                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group relative"
                 >
                   <span className="material-icons">notifications</span>
+                  {notificationCount > 0 && (
+                    <span className="absolute inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-red-500 rounded-full -top-1 -right-1">
+                      {notificationCount}
+                    </span>
+                  )}
                   <span className={`ms-3 whitespace-nowrap ${!isSidebarOpen && 'hidden'}`}>Notifications</span>
                 </Link>
               </li>
@@ -224,15 +259,7 @@ const Dashboard = () => {
                   <span className={`ms-3 whitespace-nowrap ${!isSidebarOpen && 'hidden'}`}>Carte d&apos;identité</span>
                 </Link>
               </li>
-              <li>
-                <Link 
-                  to="/admin/livret-de-famille" 
-                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                >
-                  <span className="material-icons">family_restroom</span>
-                  <span className={`ms-3 whitespace-nowrap ${!isSidebarOpen && 'hidden'}`}>Livret de famille</span>
-                </Link>
-              </li>
+             
 
 
 
@@ -245,24 +272,8 @@ const Dashboard = () => {
                   <span className={`ms-3 whitespace-nowrap ${!isSidebarOpen && 'hidden'}`}>Acte de mariage</span>
                 </Link>
               </li>
-              <li>
-                <Link 
-                  to="/admin/carte-d-identite" 
-                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                >
-                  <span > <BsFillHeartbreakFill /></span>
-                  <span className={`ms-3 whitespace-nowrap ${!isSidebarOpen && 'hidden'}`}>Acte de divorce</span>
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  to="/admin/livret-de-famille" 
-                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                >
-                  <span> <GiDeadHead /> </span>
-                  <span className={`ms-3 whitespace-nowrap ${!isSidebarOpen && 'hidden'}`}>Acte de decès</span>
-                </Link>
-              </li>
+             
+              
             </ul>
           </div>
 
@@ -305,8 +316,8 @@ const Dashboard = () => {
                   to="/admin/parametres" 
                   className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                 >
-                  <span className="material-icons">settings</span>
-                  <span className={`ms-3 whitespace-nowrap ${!isSidebarOpen && 'hidden'}`}>Se Deconnecter</span>
+                  <span className="material-icons">logout</span>
+                  <span className={`ms-3 whitespace-nowrap ${!isSidebarOpen && 'hidden'}`} onClick={handleLogout}>Se Deconnecter</span>
                 </Link>
               </li>
             </ul>

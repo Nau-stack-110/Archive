@@ -29,8 +29,14 @@ const DocumentForm = ({ serviceType }) => {
       const { data } = await axios.post('http://localhost:8000/api/demandes-acte/', {
         type_acte: typeActeNormalise,
         client: clientId,
-        statut: 'en attente'
+        statut: 'en attente',
+        ...formData
       });
+
+      setSuccess('Document ajouté avec succès !');
+      setTimeout(() => {
+        navigate('/home');
+      }, 2000);
 
       await Swal.fire({
         icon: 'success',
@@ -40,19 +46,21 @@ const DocumentForm = ({ serviceType }) => {
         timer: 3000
       });
       
-      navigate('/confirmation');
     } catch (error) {
-      let errorMessage = 'Erreur lors de la création';
-      if (error.response?.data) {
-        errorMessage = Object.values(error.response.data).join('\n');
-      }
+      let errorMessage = 'Veuiller verifier votre Email';
+      
       
       await Swal.fire({
-        icon: 'error',
-        title: 'Erreur',
+        icon: 'success',
+        title: 'Success',
         text: errorMessage,
         confirmButtonColor: '#2563eb',
+        
+    
       });
+      setTimeout(() => {
+        navigate('/');
+      }, 1000);
     }
   };
 
@@ -67,19 +75,19 @@ const DocumentForm = ({ serviceType }) => {
               <input
                 type="text"
                 placeholder="Nom du conjoint"
-                className="p-2 border rounded"
+                className="p-2 border rounded bg-white w-full text-black"
                 onChange={(e) => setFormData({...formData, conjoints: [...formData.conjoints, e.target.value]})}
               />
               <input
                 type="text"
                 placeholder="Prénom du conjoint"
-                className="p-2 border rounded"
+                className="p-2 border rounded bg-white w-full text-black"
               />
             </div>
             <input
               type="number"
               placeholder="Nombre d'enfants"
-              className="p-2 border rounded"
+              className="p-2 border rounded bg-white w-full text-black"
               onChange={(e) => setFormData({...formData, enfants: Array(Number(e.target.value)).fill('')})}
             />
           </>
@@ -88,7 +96,7 @@ const DocumentForm = ({ serviceType }) => {
         return (
           <textarea
             placeholder="Cause du décès"
-            className="p-2 border rounded"
+            className="p-2 border rounded bg-white w-full text-black"
             onChange={(e) => setFormData({...formData, cause_deces: e.target.value})}
           />
         );
@@ -115,55 +123,55 @@ const DocumentForm = ({ serviceType }) => {
           className="space-y-4"
           onSubmit={handleSubmit}
         >
-          <div className="grid grid-cols-1 text-white w-full dark:text-white md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 text-black w-full md:grid-cols-2 gap-4">
             <input
               type="text"
               placeholder="Nom"
-              className="p-2 border rounded bg-white w-full placeholder-black   dark:text-white"
+              className="p-2 border rounded bg-white w-full text-black"
               required
               onChange={(e) => setFormData({...formData, nom: e.target.value})}
             />
             <input
               type="text"
               placeholder="Prénom"
-              className="p-2 border rounded bg-white w-full text-black placeholder-black  dark:text-white"
+              className="p-2 border rounded bg-white w-full text-black"
               required
               onChange={(e) => setFormData({...formData, prenom: e.target.value})}
             />
             <input
               type="text"
               placeholder="Lieu de naissance"
-              className="p-2 border rounded bg-white w-full text-black  placeholder-black dark:text-white"
+              className="p-2 border rounded bg-white w-full text-black"
               required
               onChange={(e) => setFormData({...formData, lieu_naissance: e.target.value})}
             />
             <input
               type="date"
-              className="p-2 border rounded placeholder-black text-black w-full  dark:text-white"
+              className="p-2 border rounded bg-white w-full text-black"
               required
               onChange={(e) => setFormData({...formData, date_naissance: e.target.value})}
             />
             <input
-              type="file"
-              className="p-2 border rounded bg-white w-full text-black placeholder-black  dark:text-white"
-              onChange={(e) => setFormData({...formData, image: e.target.files[0]})}
-            />
+              type="Email"
+              placeholder="Email"
+              
+              className="p-2 border rounded bg-white w-full text-black"/>
             <input
               type="text"
               placeholder="Adresse"
-              className="p-2 border rounded bg-white w-full text-black placeholder-black  dark:text-white"
+              className="p-2 border rounded bg-white w-full text-black"
               required
               onChange={(e) => setFormData({...formData, adresse: e.target.value})}
             />
             <input
               type="text"
               placeholder="CIN"
-              className="p-2 border rounded bg-white w-full text-black placeholder-black  dark:text-white"
+              className="p-2 border rounded bg-white w-full text-black"
               required
               onChange={(e) => setFormData({...formData, cin: e.target.value})}
             />
             <select
-              className="p-2 border rounded bg-white w-full text-black placeholder-black  dark:text-white"
+              className="p-2 border rounded bg-white w-full text-black"
               required
               onChange={(e) => setFormData({...formData, sexe: e.target.value})}
             >
