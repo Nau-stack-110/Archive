@@ -217,11 +217,11 @@ const Users = () => {
             <input
               type="text"
               placeholder="Rechercher..."
-              className="w-full p-3 bg-white text-white dark:bg-gray-800 dark:text-white border border-gray-200 rounded-lg pr-10"
+              className="w-full p-3 bg-gray-700 text-white hover:text-white focus:text-white dark:bg-gray-800 dark:text-white border border-gray-200 rounded-lg pr-10 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
-            <FaSearch className="absolute right-3 top-3  text-white" />
+            <FaSearch className="absolute right-3 top-3 text-gray-400" />
           </div>
 
         </div>

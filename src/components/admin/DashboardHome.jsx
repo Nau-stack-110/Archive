@@ -75,7 +75,8 @@ const DashboardHome = () => {
       title: "Clients", 
       value: stats?.clients,
       icon: <FaUsers className="text-3xl text-indigo-500"/>,
-      color: 'indigo'
+      color: 'indigo',
+      onClick: () => navigate('/admin/utilisateurs')
     }
   ];
 
