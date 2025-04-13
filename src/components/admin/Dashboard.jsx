@@ -1,6 +1,11 @@
+import { GiDeadHead } from "react-icons/gi"; 
+import { BsFillHeartbreakFill } from "react-icons/bs"; 
+import { GiLovers } from "react-icons/gi"; 
 import { useState, useEffect } from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { FaSignOutAlt } from 'react-icons/fa';
+import Swal from 'sweetalert2';
 
 const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -17,6 +22,42 @@ const Dashboard = () => {
 
   const toggleUserMenu = () => {
     setIsUserMenuOpen(!isUserMenuOpen);
+  };
+
+  const navigate = useNavigate();
+
+  // Vérification de l'authentification admin
+  useEffect(() => {
+    const isAdmin = localStorage.getItem('isAdmin') === 'true';
+    if (!isAdmin) {
+      navigate('/login');
+    }
+  }, [navigate]);
+
+  // Gestion de la déconnexion
+  const handleLogout = () => {
+    Swal.fire({
+      title: 'Êtes-vous sûr?',
+      text: "Vous serez déconnecté de l'administration!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Oui, déconnecter!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
+        localStorage.removeItem('isAdmin');
+        navigate('/login');
+        Swal.fire({
+          title: 'Déconnexion réussie!',
+          icon: 'success',
+          timer: 3000,
+          showConfirmButton: false
+        });
+      }
+    });
   };
 
   // Gérer la visibilité de la sidebar sur mobile
@@ -79,30 +120,27 @@ const Dashboard = () => {
                 >
                   <span className="sr-only">Open user menu</span>
 
-                  <img
-                    className="w-8 h-8 rounded-full"
-                    src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                    alt="user photo"
-                  />
+      
                 </button>
                 {isUserMenuOpen && (
                   <div className="absolute right-0 top-10 z-50 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-sm shadow-sm dark:bg-gray-700 dark:divide-gray-600">
                     <div className="px-4 py-3">
                       <p className="text-sm text-gray-900 dark:text-white">
-                        Neil Sims
+                        {localStorage.getItem('userName') || 'Administrateur'}
                       </p>
                       <p className="text-sm font-medium text-gray-900 truncate dark:text-gray-300">
-                        neil.sims@flowbite.com
+                        {localStorage.getItem('userEmail')}
                       </p>
                     </div>
                     <ul className="py-1">
                       <li>
-                        <a
-                          href="#"
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                        <Link 
+                          to="/admin"
+                          className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                         >
-                          Tableau de bord
-                        </a>
+                          <span className="material-icons">dashboard</span>
+                        
+                        </Link>
                       </li>
                       <li>
                         <a
@@ -114,12 +152,13 @@ const Dashboard = () => {
                       </li>
 
                       <li>
-                        <a
-                          href="#"
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                        <button
+                          onClick={handleLogout}
+                          className="w-full flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                         >
-                          Se deconnecter
-                        </a>
+                          <FaSignOutAlt className="mr-2" />
+                          Se déconnecter
+                        </button>
                       </li>
                     </ul>
                   </div>
@@ -141,10 +180,13 @@ const Dashboard = () => {
           <div>
             <ul className="space-y-2 font-medium">
               <li>
-                <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                <Link 
+                  to="/admin"
+                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                >
                   <span className="material-icons">dashboard</span>
                   <span className={`ms-3 whitespace-nowrap ${!isSidebarOpen && 'hidden'}`}>Tableau de bord</span>
-                </a>
+                </Link>
               </li>
               <li>
                 <Link 
@@ -162,24 +204,64 @@ const Dashboard = () => {
 
             {/* Documents Section */}
             <ul className="space-y-2 font-medium">
+             
               <li className={`text-gray-500 dark:text-gray-400 text-sm px-2 py-1 ${!isSidebarOpen && 'hidden'}`}>DOCUMENTS</li>
               <li>
-                <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                <Link 
+                  to="/admin/acte-de-naissance" 
+                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                >
                   <span className="material-icons">assignment</span>
                   <span className={`ms-3 whitespace-nowrap ${!isSidebarOpen && 'hidden'}`}>Acte de naissance</span>
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                <Link 
+                  to="/admin/carte-d-identite" 
+                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                >
                   <span className="material-icons">badge</span>
-                  <span className={`ms-3 whitespace-nowrap ${!isSidebarOpen && 'hidden'}`}>Carte d'identité</span>
-                </a>
+                  <span className={`ms-3 whitespace-nowrap ${!isSidebarOpen && 'hidden'}`}>Carte d&apos;identité</span>
+                </Link>
               </li>
               <li>
-                <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                <Link 
+                  to="/admin/livret-de-famille" 
+                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                >
                   <span className="material-icons">family_restroom</span>
                   <span className={`ms-3 whitespace-nowrap ${!isSidebarOpen && 'hidden'}`}>Livret de famille</span>
-                </a>
+                </Link>
+              </li>
+
+
+
+              <li>
+                <Link 
+                  to="/admin/acte-de-naissance" 
+                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                >
+                  <span> <GiLovers /> </span>
+                  <span className={`ms-3 whitespace-nowrap ${!isSidebarOpen && 'hidden'}`}>Acte de mariage</span>
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/admin/carte-d-identite" 
+                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                >
+                  <span > <BsFillHeartbreakFill /></span>
+                  <span className={`ms-3 whitespace-nowrap ${!isSidebarOpen && 'hidden'}`}>Acte de divorce</span>
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/admin/livret-de-famille" 
+                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                >
+                  <span> <GiDeadHead /> </span>
+                  <span className={`ms-3 whitespace-nowrap ${!isSidebarOpen && 'hidden'}`}>Acte de decès</span>
+                </Link>
               </li>
             </ul>
           </div>
@@ -192,10 +274,13 @@ const Dashboard = () => {
             <ul className="space-y-2 font-medium">
               <li className={`text-gray-500 dark:text-gray-400 text-sm px-2 py-1 ${!isSidebarOpen && 'hidden'}`}>UTILISATEUR</li>
               <li>
-                <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                <Link 
+                  to="/admin/profile" 
+                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                >
                   <span className="material-icons">person</span>
                   <span className={`ms-3 whitespace-nowrap ${!isSidebarOpen && 'hidden'}`}>Profile</span>
-                </a>
+                </Link>
               </li>
               <li>
                 <Link 
@@ -216,10 +301,13 @@ const Dashboard = () => {
 
             <ul className="space-y-2 font-medium">
               <li>
-                <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                <Link 
+                  to="/admin/parametres" 
+                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                >
                   <span className="material-icons">settings</span>
-                  <span className={`ms-3 whitespace-nowrap ${!isSidebarOpen && 'hidden'}`}>Paramètres</span>
-                </a>
+                  <span className={`ms-3 whitespace-nowrap ${!isSidebarOpen && 'hidden'}`}>Se Deconnecter</span>
+                </Link>
               </li>
             </ul>
           </div>
