@@ -55,7 +55,7 @@ const DashboardHome = () => {
     { 
       title: "Régions", 
       value: stats?.regions,
-      icon: <FaMapMarkerAlt className="text-3xl text-green-500"/>,
+      icon: <FaMapMarkerAlt className="text-3xl flex items-center text-green-500"/>,
       color: 'green'
     },
     { 

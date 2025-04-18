@@ -27,34 +27,33 @@ const Home = () => {
           <h1 className="text-5xl font-bold text-white mb-4">Faciliter l'accès</h1>
           <h1 className="text-5xl font-bold text-blue-500 mb-8">aux documents administratifs</h1>
           <p className="text-gray-400 text-xl max-w-2xl mx-auto mb-12">
-            Créez, téléchargez et gérez facilement vos actes de naissance, mariage, décès, et plus encore, en toute sécurité.
+            Créez, téléchargez et gérez facilement vos actes de naissance, mariage, et plus encore, en toute sécurité.
           </p>
          
         </div>
 
-        <div className="grid grid-cols-1  md:grid-cols-3 gap-8 mt-24 max-w-6xl mx-auto pb-20">
+        <div className="grid grid-cols-1  md:grid-cols-3 gap-8 mt-24 max-w-6xl mx-auto pb-20 ">
           {[
 
             {
-              title: "Acte de naissance",
+              title: "Bulletin de naissance",
               description: "Gagnez du temps en demandant votre livret de famille en ligne."
               ,io:'naissance' 
             },
-            {
+              {
+              title: "Copie",
+              description: "Générez un copie administratives."
+              ,io:'copie'
+            } , {
               title: "Acte de décès",
               description: "Générez un acte de décès pour démarches administratives."
               ,io:"decès",
             },
-            {
-              title: "Copie",
-              description: "Générez un copie administratives."
-              ,io:'copie'
-            }
           ].map((service, index) => (
             <button
               key={index}
               onClick={() => navigate(`/${service.io}`)}
-              className="bg-white/5 p-8 rounded-xl text-left hover:bg-white/10 transition-colors block"
+              className="bg-white/5 p-8 rounded-xl text-left block"
             >
               <div className="text-3xl text-blue-500 mb-4"></div>
               <h3 className="text-xl font-bold text-white mb-4">{service.title}</h3>
